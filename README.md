@@ -1,7 +1,7 @@
-# Vision Experiments
+# AI Experiments
 
 ## Description
-Repository for python notebooks to experiment with publicly available Vision models 
+Repository for python notebooks to experiment with AI
 
 ## Experiments
 
