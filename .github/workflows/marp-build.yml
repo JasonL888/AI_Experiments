@@ -1,0 +1,56 @@
+name: Marp Presentation Builder
+
+on:
+  push:
+    branches:
+      - main # Change this to 'master' if your default branch is master
+    # Only run the workflow if any markdown file changes
+    paths:
+      - '**/*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Important: This is needed to allow 'git-auto-commit-action' to push back changes
+          fetch-depth: 0
+
+      - name: 2. Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 3. Install Marp CLI
+        # Installs the Marp command-line interface globally
+        run: npm install -g @marp-team/marp-cli
+
+      # 4. (Removed) We no longer need to create the 'dist' directory.
+
+      - name: 5. Generate HTML Presentations In-Place (Excluding README.md)
+        # Finds all .md files (excluding the top-level README.md) and converts each one
+        # to a corresponding .html file in the same directory.
+        run: |
+          find . -type f -name "*.md" -not -name "./README.md" -print0 | while IFS= read -r -d $'\0' file; do
+              # Calculate the output file name by replacing .md with .html
+              base_name=$(basename "$file" .md)
+              output_dir=$(dirname "$file")
+              output_file="$output_dir/$base_name.html"
+
+              echo "Generating HTML for: $file -> $output_file"
+              marp "$file" --output "$output_file" --html --allow-local-files
+          done
+
+      - name: 6. Commit and Push Generated HTML Files
+        # This action checks if there are new HTML files or updated ones and commits them back
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Build: Marp HTML presentations updated [skip ci]"
+          # Now tracking ALL .html files across the repository, not just in 'dist/'
+          files: '**/*.html'
+          # Ensure the action uses the GitHub bot identity
+          commit_user_name: 'github-actions[bot]'
+          commit_user_email: 'github-actions[bot]@users.noreply.github.com'
