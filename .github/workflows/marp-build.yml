@@ -40,7 +40,7 @@ jobs:
               output_file="$output_dir/$base_name.html"
 
               echo "Generating HTML for: $file -> $output_file"
-              marp "$file" --output "$output_file" --html --allow-local-files
+              marp "$file" --theme ./themes/dracula.css --output "$output_file" --html --allow-local-files
           done
 
       - name: 6. Commit and Push Generated HTML Files
