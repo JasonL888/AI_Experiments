@@ -50,7 +50,7 @@ h1 {
 }
 </style>
 
-![bg right w:80%](../Images/computer_vision.png)
+![bg right w:80%](../Images/SophiArch_Logo.png)
 
 ---
 
