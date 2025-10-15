@@ -1,5 +1,8 @@
 name: Marp Presentation Builder
 
+permissions:
+  contents: write
+
 on:
   push:
     branches:
@@ -53,3 +56,5 @@ jobs:
           # Ensure the action uses the GitHub bot identity
           commit_user_name: 'github-actions[bot]'
           commit_user_email: 'github-actions[bot]@users.noreply.github.com'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
