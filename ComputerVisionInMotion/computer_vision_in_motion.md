@@ -250,3 +250,4 @@ Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
 |Roboflow| [Platform & Learning: Roboflow Docs](https://docs.roboflow.com/)|	End-to-end platform for building computer vision projects (managing datasets, training, and deployment).
 | | [Learning Resources: Roboflow Learn](https://roboflow.com/learn)|	Educational guides and tutorials covering computer vision fundamentals and project workflows.
 |COCO Dataset| Evaluation Metrics|	A common benchmark dataset. Its evaluation metric, Average Precision (AP), is standard for object detection models.
+
