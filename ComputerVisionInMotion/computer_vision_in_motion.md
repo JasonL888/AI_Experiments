@@ -145,11 +145,14 @@ results[0].show()  # Display with masks
 Task|	Output|	Speed|	Use Cases
 ----|---------|------|------------
 Classification|	Single label|	Fastest|	Content filtering, basic recognition
-Object Detection|	Bounding boxes + labels|	Fast|	Surveillance, retail analytics
+Object Detection|	Bounding boxes with labels|	Fast|	Surveillance, retail analytics
 Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
 
 ---
 # Real World Applications
+<div class="columns">
+<div>
+
 - Autonomous Vehicles
     - Lane detection (segmentation)
     - Pedestrian and vehicle detection
@@ -159,6 +162,8 @@ Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
     - Tumor segmentation in MRI/CT scans
     - Cell counting in microscopy
     - Organ segmentation for surgery planning
+</div>
+<div>
 
 - Retail & E-commerce
     - Shelf monitoring and inventory management
@@ -169,6 +174,12 @@ Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
     - Crop health monitoring
     - Yield prediction through segmentation
     - Pest detection
+</div>
+</div>
+
+
+
+
 
 ---
 # Technical Considerations
@@ -210,14 +221,32 @@ Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
 
 ---
 # References
-Technology/Concept|	Resource Type & Link|	Key Details / Purpose
-------------------|---------------------|--------------------------
-YOLO (All Versions)|	[A Comprehensive Review of YOLO...](https://arxiv.org/html/2304.00501v6/)	|Covers evolution from YOLOv1 to YOLOv8 and YOLO-NAS; includes metrics, architecture changes, and diverse applications.
-U-Net| [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)	|Introduces the classic encoder-decoder architecture with skip connections for precise image segmentation.
-Mask R-CNN| [Mask R-CNN](https://arxiv.org/abs/1703.06870)	|Extends Faster R-CNN by adding a parallel branch for predicting high-quality segmentation masks for each object instance.
-Detectron2| [Official Documentation: Detectron2 Docs](https://detectron2.readthedocs.io/)	|Meta AI's framework for object detection and segmentation, built on PyTorch. Source for models and training code.
-OpenCV| [Main Documentation: OpenCV Docs](https://docs.opencv.org/4.x/index.html)|	The fundamental library for computer vision tasks, essential for image/video I/O, preprocessing, and GUI operations.
-  | [Python Tutorials: OpenCV-Python Tutorials](https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html)|	Practical guides for using OpenCV with Python, ideal for hands-on components and getting started.
-Roboflow| [Platform & Learning: Roboflow Docs](https://docs.roboflow.com/)|	End-to-end platform for building computer vision projects (managing datasets, training, and deployment).
- | [Learning Resources: Roboflow Learn](https://roboflow.com/learn)|	Educational guides and tutorials covering computer vision fundamentals and project workflows.
-COCO Dataset| Evaluation Metrics|	A common benchmark dataset. Its evaluation metric, Average Precision (AP), is standard for object detection models.
+<style class=scoped>
+    table {
+        font-size: 0.5em;
+    }
+</style>
+
+|Technology/Concept|	Resource Type & Link|	Key Details / Purpose
+|------------------|---------------------|--------------------------
+|YOLO (All Versions)|	[A Comprehensive Review of YOLO...](https://arxiv.org/html/2304.00501v6/)	|Covers evolution from YOLOv1 to YOLOv8 and YOLO-NAS; includes metrics, architecture changes, and diverse applications.
+|U-Net| [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)	|Introduces the classic encoder-decoder architecture with skip connections for precise image segmentation.
+|Mask R-CNN| [Mask R-CNN](https://arxiv.org/abs/1703.06870)	|Extends Faster R-CNN by adding a parallel branch for predicting high-quality segmentation masks for each object instance.
+
+
+---
+# References
+<style class=scoped>
+    table {
+        font-size: 0.5em;
+    }
+</style>
+
+|Technology/Concept|	Resource Type & Link|	Key Details / Purpose
+|------------------|---------------------|--------------------------
+|Detectron2| [Official Documentation: Detectron2 Docs](https://detectron2.readthedocs.io/)	|Meta AI's framework for object detection and segmentation, built on PyTorch. Source for models and training code.
+|OpenCV| [Main Documentation: OpenCV Docs](https://docs.opencv.org/4.x/index.html)|	The fundamental library for computer vision tasks, essential for image/video I/O, preprocessing, and GUI operations.
+|  | [Python Tutorials: OpenCV-Python Tutorials](https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html)|	Practical guides for using OpenCV with Python, ideal for hands-on components and getting started.
+|Roboflow| [Platform & Learning: Roboflow Docs](https://docs.roboflow.com/)|	End-to-end platform for building computer vision projects (managing datasets, training, and deployment).
+| | [Learning Resources: Roboflow Learn](https://roboflow.com/learn)|	Educational guides and tutorials covering computer vision fundamentals and project workflows.
+|COCO Dataset| Evaluation Metrics|	A common benchmark dataset. Its evaluation metric, Average Precision (AP), is standard for object detection models.
