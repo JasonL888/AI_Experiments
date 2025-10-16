@@ -36,7 +36,7 @@ jobs:
       - name: 5. Generate HTML Presentations In-Place (Excluding README.md)
         # FIX: Changed -not -name to -not -path to correctly exclude the full path of the root README.md
         run: |
-          find . -type f -name "*.md" -not -path "./README.md" -print0 | while IFS= read -r -d $'\0' file; do
+          find . -type f -name "*.md" -not -name "README.md" -print0 | while IFS= read -r -d $'\0' file; do
               # Calculate the output file name by replacing .md with .html
               base_name=$(basename "$file" .md)
               output_dir=$(dirname "$file")
