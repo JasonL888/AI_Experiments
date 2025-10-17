@@ -42,8 +42,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Build: Marp HTML presentations updated [skip ci]"
-          # Now tracking ALL .html files across the repository, not just in 'dist/'
-          files: '**/*.html'
+          file_pattern: '**/*.html'
           # Ensure the action uses the GitHub bot identity
           commit_user_name: 'github-actions[bot]'
           commit_user_email: 'github-actions[bot]@users.noreply.github.com'
