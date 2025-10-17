@@ -34,17 +34,8 @@ jobs:
       # 4. (Removed) We no longer need to create the 'dist' directory.
 
       - name: 5. Generate HTML Presentations In-Place (Excluding README.md)
-        # FIX: Changed -not -name to -not -path to correctly exclude the full path of the root README.md
         run: |
-          find . -type f -name "*.md" -not -name "README.md" -print0 | while IFS= read -r -d $'\0' file; do
-              # Calculate the output file name by replacing .md with .html
-              base_name=$(basename "$file" .md)
-              output_dir=$(dirname "$file")
-              output_file="$output_dir/$base_name.html"
-
-              echo "Generating HTML for: $file -> $output_file"
-              marp "$file" --theme ./themes/dracula.css --output "$output_file" --html --allow-local-files
-          done
+          find . -type f -name "*.md" -not -name "README.md"  -exec marp {} --theme ./themes/dracula.css --html --allow-local-files \;
 
       - name: 6. Commit and Push Generated HTML Files
         # This action checks if there are new HTML files or updated ones and commits them back
