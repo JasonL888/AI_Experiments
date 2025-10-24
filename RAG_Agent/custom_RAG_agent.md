@@ -30,7 +30,7 @@ style: |
         color: var(--dracula-orange);
     }
     li {
-      font-size: 0.9em;
+      font-size: 0.85em;
     }
     strong {
         color: var(--dracula-orange);
@@ -70,9 +70,10 @@ style: |
 <div class="columns">
 <div>
 
-- RAG is framework for augmenting LLM prompts with 
-    - relevant, contextual information 
-        - from external knowledge base
+- Framework for 
+    - **augmenting** LLM **prompts** with 
+        - relevant, contextual information 
+            - from external knowledge base
 </div>
 <div>
 
@@ -118,46 +119,47 @@ style: |
 ---
 
 # RAG Pipeline: A Step-by-Step Guide
-
-1.  Ingest & Chunk
-2.  Generate Embeddings
-3.  Store in Vector DB
-4.  Retrieve
-5.  Synthesize & Answer
+- Preparation
+    1.  **Ingest & Chunk**
+    2.  Generate **Embeddings**
+    3.  Store in **Vector DB**
+- Upon query
+    4.  **Retrieve**  
+    5.  **Synthesize & Answer**
 
 ---
 # Step 1: Ingest & Chunk
 
 - Goal:
-    - Break down your source document (PDF, TXT, etc.) into manageable pieces.
+    - **Break down** your source document (PDF, TXT, etc.) into manageable pieces.
 - Why chunk? 
-    - LLMs have context windows. We can't feed an entire 100-page PDF.
+    - LLMs have limited **context windows**. We can't feed an entire 100-page PDF.
 - Challenge:
     -  Bad chunking is a major failure mode!
         - Too small: Lose context and meaning.
         - Too large: Introduce irrelevant noise for the LLM.
 - Common Strategy: 
-    - Use overlapping chunks of ~500-1000 characters.
+    - Use **overlapping chunks** of ~500-1000 characters.
 
 ---
 
 # Step 2: Generate Embeddings
 
 - Process: 
-    - Run each text chunk through an embedding model.
+    - Run each text chunk through an **embedding model**
 - Options:
     - OpenAI's `text-embedding-ada-002` (Simple, effective, paid)
     - Open-source (e.g., `sentence-transformers`) (Free, run locally)
 - Output:
-    - A high-dimensional vector for each chunk, stored for later.
+    - A **high-dimensional vector** for each chunk, stored for later.
 ---
 
 # Step 3: Store in Vector DB
 
 - Process: 
-    - Take the generated vectors and their corresponding text chunks 
-    - Load them into your vector database (e.g., ChromaDB/FAISS)
-- This creates your external knowledge base
+    - Take the **generated vectors** and their **corresponding text chunks** 
+    - Load them into your **vector database** (e.g., ChromaDB/FAISS)
+- This creates your **external knowledge base**
     - The system is now "ready" to answer questions.
 
 ---
@@ -171,54 +173,58 @@ style: |
 ---
 
 # Step 5: Synthesize & Answer
-- Construct the "Grounded" Prompt:
-```text
-Use the following context to answer the user's question. If you don't know the answer, just say so.                
+- Construct the **"Grounded" Prompt**:
+    ```text
+    Use the following context to answer the user's question. If you don't know the answer, just say so.                
 
-Context:
-{Retrieved_Chunk_1}
-{Retrieved_Chunk_2}
+    Context:
+    {Retrieved_Chunk_1}
+    {Retrieved_Chunk_2}
 
-User Question: {User's_Original_Question}
+    User Question: {User's_Original_Question}
 
-text
-```
+    text
+    ```
 - Feed this prompt to the LLM
     - LLM now generates an answer **based on the provided context**
         - drastically reducing hallucinations.
 
 ---
 # How Does This Improve Over a Raw LLM?
-- Factual Grounding: 
+- **Factual Grounding**: 
     - Drastically reduces hallucinations by tethering answers to a source.
-- Up-to-Date Information: 
+- **Up-to-Date Information**: 
     - Knowledge base can be updated independently of the LLM.
-- Domain Specialization: 
+- **Domain Specialization**: 
     - Can answer questions about private, proprietary, or niche data.
-- Transparency & Citations: 
+- **Transparency** & Citations: 
     - You can trace the answer back to the source chunks.
 
 ---
 
 # What Are the Failure Modes?
-- Bad Chunking: 
+- **Bad Chunking**: 
     - Chunks that are too small lose context; too large introduce noise.
-- Missing Information: 
+- **Missing** Information: 
     - If answer is NOT in database, the LLM might guess (hallucinate) or correctly state it doesn't know.
-- Poor Retrieval: 
+- **Poor Retrieval**: 
     - The vector search didn't find the most relevant chunks.
         - Could be due to a weak embedding model or a query that is phrased very differently from the source text.
-- Synthesis Failure: 
+- **Synthesis Failure**: 
     - LLM might ignore the context or misrepresent it, even with good retrieval.
+---
+# Demo
+- [RAG agent - python notebook](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/RAG_Agent/rag_agent.ipynb)
+
 
 ---
 
 # Key Takeaways
-- RAG is a powerful, foundational pattern 
+- RAG is a **powerful, foundational pattern** 
     - for building grounded and useful LLM applications
-- It directly addresses the critical problem of LLM hallucination.
+- It directly addresses the critical problem of **LLM hallucination**.
 - core technologies are 
-    - vector embeddings and vector databases
+    - **vector embeddings** and **vector databases**
 - Success depends on the entire pipeline: 
     `Chunking -> Embedding -> Retrieval -> Synthesis`
 
