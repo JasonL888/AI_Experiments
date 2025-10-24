@@ -258,6 +258,11 @@ def create_saliency_map(model, image, class_index):
 # saliency = create_saliency_map(model, test_image, predicted_class)                              
 ```
 
+---
+# Demo
+- [Hands-on Part A - SHAP and LIME - python notebook](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/ExplainableAI/hands_on_part_A_SHAP_LIME.ipynb)
+- [Hands-on Part B - Saliency Map and Grad-CAM - python notebook](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/ExplainableAI/hands_on_part_B_Saliency_Grad-CAM.ipynb))
+
 
 ---
 # Critical Applications: Healthcare
