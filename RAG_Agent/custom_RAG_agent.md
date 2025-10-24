@@ -77,7 +77,7 @@ style: |
 </div>
 <div>
 
-![center height:400](../images/rag.svg)
+![center height:400](../Images/rag.svg)
 </div>
 </div>
 
