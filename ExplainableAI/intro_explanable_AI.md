@@ -19,15 +19,18 @@ style: |
         text-align: center;
     }
     table {
-        font-size: 0.8em;
         width: 100%;
-        text-align: center;
+    }
+    theader {
+        font-size: 0.7em;
+         text-align: center;       
     }
     tbody {
-        text-align: justify;
+        font-size: 0.6em;
+        text-align: left;
     }
     h1 {
-        font-size: 1.35em;
+        font-size: 1.3em;
     }
     li > strong {
         color: var(--dracula-orange);
@@ -104,146 +107,55 @@ style: |
 
 # Key Concepts: Interpretability vs. Explainability
 
-- Model Interpretability
-    - **Intrinsic transparency**
-    - Simple models (linear regression, decision trees)
-    - Naturally understandable
+- Both aim to make model behavior understandable, 
+    - but differ in **focus** and **methods**
+- Critical for trust, debugging, regulatory compliance, and responsible AI
 
-- Model Explainability
-    - **Post-hoc explanations**
-    - Complex models (neural networks, ensembles)
-    - Additional techniques to explain decisions
+---
+# Interpretability
 
-> Think
-> - **Interpretable** = Glass box
-> - **Explainable** = Black box with a manual
+- **Definition:** Directly understanding how a model transforms inputs into outputs
+- **Intrinsic:** Model is transparent by design (e.g., linear models, decision trees)
+- **Types:**
+  - **Global:** Entire model logic
+  - **Local:** Specific prediction path
+
+---
+# Explainability
+
+- **Definition:** Understanding why a model made a specific decision
+- **Post hoc:** Requires external tools (e.g., SHAP, LIME, saliency maps)
+- **Useful for:** Complex or "black-box" models (deep neural networks)
+- **Primarily local** (explains single predictions)
+
+---
+# Key Differences
+
+| Aspect            | Interpretability           | Explainability             |
+|-------------------|---------------------------|----------------------------|
+| Focus             | Model logic (“**how***”)        | Prediction reason (“**why**”)  |
+| Method            | Intrinsic                  | Post hoc                   |
+| Typical Models    | Simple, transparent        | Complex, opaque            |
+| Granularity       | Global & Local             | Mainly Local               |
+| Goal              | Technical transparency     | User-facing justifications |
 
 ---
 
-# Common XAI Techniques
+# Common Explainable AI (XAI) Techniques
 
-| Global Methods | Local Methods | Visualization |
-|----------------|---------------|---------------|
-| Feature Importance | LIME | Saliency Maps |
-| Partial Dependence | SHAP | Activation Maps |
-| Model Distillation | Counterfactuals | Attention Maps |
+|Technique|Method|Key Features|Use Case
+|-------------|------|------------|--------
+|Intrinsically Interpretable Models|Linear, Logistic Regression|Transparent coefficients, feature impact|Regression, binary classication
+|             |Decision Trees & Rule-based Systems|Traceable rules and branches|Simple tree models, rule learners
+|Post-hoc Explanation Methods|LIME| Local surrogate method for specific predictions|Explaining individual predictions
+|                            |SHAP|Shapley value-based feature importance|Global and local feature attribution
+|Visualization-Based Techniques|Grad-CAM|Image region heatmaps from deep models|Analyzing CNN image decisions
+|                            |Saliency Maps|Input pertubations for visual explanations|Vision, model debugging
 
----
-
-# Feature Importance
-<div class="columns">
-<div>
-
-- **What:**
-    - Identifies which features most influence model predictions globally
-
-- **How:**
-    - Permutation importance
-    - Gini importance (tree-based)
-    - Coefficient magnitude (linear models)
-
-</div>
-<div>
-
-- **Use cases:** 
-    - Tabular data, structured data analysis
-
-```python
-# Example with scikit-learn
-from sklearn.inspection import permutation_importance
-result = permutation_importance(model, X_test, y_test, n_repeats=10)
-```
-</div>
-</div>
-
----
-# Hands-On Part 1: Feature Importance for Tabular Data
-<div class="columns">
-<div>
-
-- Applying XAI to your existing classifier:
-```python
-import shap
-import matplotlib.pyplot as plt
-
-# Load your pre-trained model
-# model = your_trained_classifier
-
-# Create explainer
-explainer = shap.TreeExplainer(model)
-shap_values = explainer.shap_values(X_test)
-
-# Visualize feature importance
-shap.summary_plot(shap_values, X_test)            
-```
-</div>
-<div>
-
-- Expected Output:
-    - Feature importance ranking
-    - Impact direction (positive/negative)
-    - Global model behavior
-</div>
-</div>
-
----
-# Saliency Maps for Image Classification
-- **What**: 
-    - Highlights pixels most influential to the prediction
-- **How**:
-    - Gradient-based methods
-    - Class activation maps (Grad-CAM)
-    - Guided backpropagation
-- **For "cat vs. dog" classifier**:
-    - Which pixels made model say "cat"?
-    - Which features considered "dog-like"?
-
-![bg right](https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80)
-
----
-# Hands-On Part 2: Saliency Maps for Images
-```python
-import tensorflow as tf
-import matplotlib.pyplot as plt
-
-def create_saliency_map(model, image, class_index):
-    image = tf.cast(image, tf.float32)
-    
-    with tf.GradientTape() as tape:
-        tape.watch(image)
-        prediction = model(image)
-        class_score = prediction[:, class_index]
-    
-    gradients = tape.gradient(class_score, image)
-    saliency = tf.reduce_max(tf.abs(gradients), axis=-1)
-    return saliency[0]
-
-# Apply to your image classifier
-# saliency = create_saliency_map(model, test_image, predicted_class)                              
-```
 
 ---
 
-# SHAP: SHapley Additive exPlanations
-- **Game theory approach**: 
-    - Fairly distributes "credit" among features
-- **Key properties**:
-    - **Local accuracy**: Explanation matches model output
-    - **Missingness**: Features with no effect get zero importance
-    - **Consistency**: Better features get more credit
 
-```python
-import shap
-
-# Model-agnostic explainer
-explainer = shap.KernelExplainer(model.predict, X_train)
-shap_values = explainer.shap_values(X_test_instance)
-
-# Force plot for individual prediction
-shap.force_plot(explainer.expected_value, shap_values, X_test_instance)                               
-```
-
----
 
 # LIME: Local Interpretable Model-agnostic Explanations
 <div class="columns">
@@ -278,6 +190,73 @@ exp.show_in_notebook(show_table=True)
 ```
 </div>
 </div>
+
+---
+# SHAP: SHapley Additive exPlanations
+<div class="columns">
+<div>
+
+- **Game theory approach**: 
+    - Fairly distributes "credit" among features to outcome prediction
+- **Key properties**:
+    - **Local accuracy**: Explanation matches model output
+    - **Missingness**: Features with no effect get zero importance
+    - **Consistency**: Better features get more credit
+</div>
+<div>
+
+
+```python
+import shap
+
+# Load your pre-trained model
+# model = your_trained_classifier
+
+# Create explainer
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(X_test)
+
+# Visualize feature importance
+shap.summary_plot(shap_values, X_test)                 
+```
+</div>
+</div>
+
+---
+# Saliency Maps for Image Classification
+- **What**: 
+    - Highlights pixels most influential to the prediction
+- **How**:
+    - Gradient-based methods
+    - Class activation maps (Grad-CAM)
+    - Guided backpropagation
+- **For "cat vs. dog" classifier**:
+    - Which pixels made model say "cat"?
+    - Which features considered "dog-like"?
+
+![bg right](https://images.unsplash.com/photo-1543852786-1cf6624b9987?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80)
+
+---
+# Saliency Maps for Images
+```python
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+def create_saliency_map(model, image, class_index):
+    image = tf.cast(image, tf.float32)
+    
+    with tf.GradientTape() as tape:
+        tape.watch(image)
+        prediction = model(image)
+        class_score = prediction[:, class_index]
+    
+    gradients = tape.gradient(class_score, image)
+    saliency = tf.reduce_max(tf.abs(gradients), axis=-1)
+    return saliency[0]
+
+# Apply to your image classifier
+# saliency = create_saliency_map(model, test_image, predicted_class)                              
+```
 
 
 ---
@@ -393,32 +372,6 @@ exp.show_in_notebook(show_table=True)
 > Remember: Explainability is a means to an end, not the end itself.
 
 ---
-# Hands-On Exercise Plan
-<div class="columns">
-<div>
-
-##### Part A: Tabular Data (30 mins)
-- Load your pre-trained classifier
-- Apply SHAP to generate global feature importance
-- Analyze individual predictions with force plots
-- Compare with LIME explanations
-</div>
-<div>
-
-##### Part B: Image Data (30 mins)
-- Use your CNN image classifier
-- Generate saliency maps for test images
-- Compare Grad-CAM with simple gradient methods
-- Discuss what features the model actually learned
-</div>
-</div>
-
-
-
-
-
-
----
 # Discussion Questions
 - **In healthcare**, would you trust an AI diagnosis that's 95% accurate but unexplainable over a human doctor who's 90% accurate but can explain their reasoning?
 
@@ -426,16 +379,29 @@ exp.show_in_notebook(show_table=True)
 
 - **Can good explanations** ever make up for lower model accuracy?
 
-- **How do we balance** the trade-off between model complexity and explainability?
+<!--
+Healthcare 
+- 95% accurate but unexplainable AI might outperform a 90% accurate human diagnostician on paper
+- patients and healthcare systems generally favor transparent, interpretable AI–human collaboration over opaque automation.
+
+Domains
+- explainability is mandatory wherever human rights, safety, or fairness are at stake (eg. healthcare, justice/law, HR recruitment, autonomous driving)
+- optional where performance gains outweigh interpretive clarity and the impact of incorrect or opaque decisions is minimal (eg. entertainment & recommendations, industrial optimiation - eg. production scheduling, network optimization)
+
+Good explanations vs lower model accuracy
+- yes 
+    - only in context where human trust, accountability or safety-critical decisions are more important than marginal gains in predictive performance
+        - eg. healthcare, finance or product cost estimation
+    - high-volume, low-risk user-facing system (eg. youtube/shopping recommendation) accuracy typically dominates as it affects performance outcome, users are less concern with understanding model
+
+--->
 
 ---
 
 # Resources & Next Steps
 - **Libraries to explore**:
-    - `shap` - SHAP explanations
-    - `lime` - LIME explanations
-    - `interpret` - Microsoft's interpretability package
-    - `captum` - PyTorch model interpretability
+    - `shap` - [SHAP docs](https://shap.readthedocs.io/en/latest/index.html)
+    - `lime` - [lime github](https://github.com/marcotcr/lime)
 
 - **Further learning**:
     - ["Interpretable Machine Learning" by Christoph Molnar](https://christophm.github.io/interpretable-ml-book/)
