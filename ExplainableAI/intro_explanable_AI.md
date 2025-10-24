@@ -133,7 +133,7 @@ style: |
 
 | Aspect            | Interpretability           | Explainability             |
 |-------------------|---------------------------|----------------------------|
-| Focus             | Model logic (“**how***”)        | Prediction reason (“**why**”)  |
+| Focus             | Model logic (“**how**”)        | Prediction reason (“**why**”)  |
 | Method            | Intrinsic                  | Post hoc                   |
 | Typical Models    | Simple, transparent        | Complex, opaque            |
 | Granularity       | Global & Local             | Mainly Local               |
@@ -185,8 +185,7 @@ exp = explainer.explain_instance(
     X_test.iloc[0], 
     model.predict_proba, 
     num_features=5
-)
-exp.show_in_notebook(show_table=True)                       
+)                    
 ```
 </div>
 </div>
@@ -239,23 +238,22 @@ shap.summary_plot(shap_values, X_test)
 ---
 # Saliency Maps for Images
 ```python
-import tensorflow as tf
-import matplotlib.pyplot as plt
+from tf_keras_vis.saliency import Saliency
+# We use the built-in Saliency class.
+from tf_keras_vis.utils.scores import CategoricalScore
+# We also define a score function to tell the library which class prediction to optimize for (in our case, the predicted class).
+if predicted_class_idx is not None:
+    # 1. Define the score function (the class to maximize/get gradient for)
+    score = CategoricalScore([predicted_class_idx])
 
-def create_saliency_map(model, image, class_index):
-    image = tf.cast(image, tf.float32)
-    
-    with tf.GradientTape() as tape:
-        tape.watch(image)
-        prediction = model(image)
-        class_score = prediction[:, class_index]
-    
-    gradients = tape.gradient(class_score, image)
-    saliency = tf.reduce_max(tf.abs(gradients), axis=-1)
-    return saliency[0]
+    # 2. Create the Saliency object
+    # The 'clone=True' ensures the model is safely copied for gradient computation
+    saliency = Saliency(model, model_modifier=None, clone=True)
 
-# Apply to your image classifier
-# saliency = create_saliency_map(model, test_image, predicted_class)                              
+    # 3. Generate the saliency map
+    # The result has shape (1, 224, 224, 3). We only need the first batch item and max over channels.
+    saliency_map_vanilla = saliency(score, test_img_tensor) 
+                           
 ```
 
 ---
