@@ -7,7 +7,7 @@ paginate: true
 transition: fade
 class: 
 - lead
-header: Introduction to eXpanable AI (XAI)
+header: Introduction to eXpainable AI (XAI)
 footer: "© 2025 SophiArch"
 style: |
     .columns {
@@ -58,7 +58,7 @@ style: |
 
 ---
 
-# <br><br>Introduction to eXplanable AI (XAI)
+# <br><br>Introduction to eXplainable AI (XAI)
 - Addressing trust and interpretability in modern AI
 
 
