@@ -25,7 +25,6 @@ style: |
     }
     tbody {
         text-align: justify;
-        font-size: 0.6em;
     }
     li > strong {
         color: var(--dracula-orange);
@@ -42,13 +41,13 @@ style: |
     }
 ---
 
-# <br><br>Computer Vision in Motion
+# <br><br><br>Computer Vision in Motion
 
 
 ![bg right w:80%](../Images/SophiArch_Logo.png)
 
 ---
-# <br><br>Fundamentals Concepts
+# <br><br><br>Fundamentals Concepts
 
 ![bg right w:80%](../Images/computer_vision.png)
 
@@ -65,7 +64,7 @@ style: |
 ---
 
 # Object Detection Fundamentals
-- Bounding Boxes
+- **Bounding Boxes**
     - Rectangular regions defining object locations
     - Formats: (x, y, width, height) or (x1, y1, x2, y2)
     - Confidence scores for each detection
@@ -97,10 +96,11 @@ style: |
     - newer and growly rapidly for comprehensive scene understanding
 
 
+> image from https://pyimagesearch.com/
 </div>
 </div>
 
-> image from https://pyimagesearch.com/
+
 
 
 
@@ -121,7 +121,7 @@ Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
     - Occlusion Handling: Partial object visibility
 
 ---
-# <br><br>Computer Vision Metrics
+# <br><br><br>Computer Vision Metrics
 
 
 ![bg right w:80%](../Images/computer_vision.png)
@@ -192,7 +192,7 @@ AP=0 (poor) - model fails to detect anything
         mAP = \frac{AP_{cat} + AP_{dog} + AP_{car}}{3}
         $$
 
-- $mAP@50-95$
+- mAP@50-95
     - more strict and modern standard 
         - based on COCO benchmark
     - AP at 10 IoU thresholds
@@ -214,7 +214,7 @@ Here’s a simple visualization showing how AP changes with IoU thresholds:
 
 ---
 
-# <br><br>Computer Vision Models
+# <br><br><br>Computer Vision Models
 
 ![bg right w:80%](../Images/computer_vision.png)
 
