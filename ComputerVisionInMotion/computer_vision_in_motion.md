@@ -25,6 +25,7 @@ style: |
     }
     tbody {
         text-align: justify;
+        font-size: 0.6em;
     }
     li > strong {
         color: var(--dracula-orange);
@@ -41,19 +42,17 @@ style: |
     }
 ---
 
-# Computer Vision in Motion
-- Object Detection
-- Image Segmentation
-<style scoped>
-h1 {
-  margin-top: 25%;
-}
-</style>
+# <br><br>Computer Vision in Motion
+
 
 ![bg right w:80%](../Images/SophiArch_Logo.png)
 
 ---
+# <br><br>Fundamentals Concepts
 
+![bg right w:80%](../Images/computer_vision.png)
+
+---
 # From Static to Dynamic Vision
 - Evolution of Computer Vision Tasks
     - **Image Classification**: "What is in this image?"
@@ -77,6 +76,150 @@ h1 {
     - Occlusion and varying viewpoints
 
 ---
+# Image Segmentation Types
+<div class="columns">
+<div>
+
+- Semantic Segmentation
+![width:500 height:90](https://b2633864.smushcdn.com/2633864/wp-content/uploads/2022/06/semantic-segmentation.png?lossy=2&strip=1&webp=1)
+
+- Instance Segmentation
+![width:500 height:90](https://b2633864.smushcdn.com/2633864/wp-content/uploads/2022/06/instance-segmentation.png?lossy=2&strip=1&webp=1)
+
+- Panoptic Segmentation
+![width:250 height:90](https://b2633864.smushcdn.com/2633864/wp-content/uploads/2022/06/panoptic-segmentation-1.png?lossy=2&strip=1&webp=1)![width:250 height:90](https://b2633864.smushcdn.com/2633864/wp-content/uploads/2022/06/panoptic-segmentation-2.png?lossy=2&strip=1&webp=1)
+</div>
+<div>
+
+- **Semantic** and **Instance** segmentation
+    - mature and widely used
+- **Panoptic** segmentation
+    - newer and growly rapidly for comprehensive scene understanding
+
+
+</div>
+</div>
+
+> image from https://pyimagesearch.com/
+
+
+
+---
+# Performance Comparision
+Task|	Output|	Speed|	Use Cases
+----|---------|------|------------
+Classification|	Single label|	Fastest|	Content filtering, basic recognition
+Object Detection|	Bounding boxes with labels|	Fast|	Surveillance, retail analytics
+Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
+
+---
+# Technical Considerations
+- Challenges in Real-time Applications
+    - Computational Constraints: Balancing accuracy vs. speed
+    - Lighting Variations: Robustness to different conditions
+    - Scale Variations: Detecting objects at multiple distances
+    - Occlusion Handling: Partial object visibility
+
+---
+# <br><br>Computer Vision Metrics
+
+
+![bg right w:80%](../Images/computer_vision.png)
+
+
+---
+# Intersection over Union (IoU)
+<div class="columns">
+<div>
+
+$$
+IoU = \frac{\text{Area of Overlap}}{\text{Area of Union}}
+$$
+
+- measures how close one prediction box is to the real box
+    - 100%: perfect match
+    - &nbsp; &nbsp; 0%: no match
+
+</div>
+<div>
+
+![width:600](../Images/computer_vision_metrics/computer_vision_metrics.001.jpeg)
+</div>
+</div>
+
+---
+# Average Precision (AP)
+
+<div class="columns">
+<div>
+
+$$
+AP = \text{Area under Precision-Recall curve}
+$$
+- measures how well model classifies overall
+    - not just the one box
+- combines 2 ideas
+    - **Precision**: of all predicted
+        - how many were correct ?
+    - **Recall**: of all the actual
+        - how many did the model find ?
+
+</div>
+<div>
+
+![width:600](../Images/computer_vision_AP)
+</div>
+</div>
+
+<!--
+AP=1.0 (perfect) - curves stay at top at all recall levels
+AP=0.5 (average) - precision drops as recall increases (some missed detections or false positives)
+AP=0 (poor) - model fails to detect anything 
+-->
+
+
+
+---
+
+# Mean Average Precision (mAP)
+
+<div class="columns">
+<div>
+
+- Mean AP values for all classes
+    - eg. 3 classes (cat, dog, car)
+        $$
+        mAP = \frac{AP_{cat} + AP_{dog} + AP_{car}}{3}
+        $$
+
+- $mAP@50-95$
+    - more strict and modern standard 
+        - based on COCO benchmark
+    - AP at 10 IoU thresholds
+        - 0.50,0.55 ... 0.90,0.95
+</div>
+<div>
+
+![width:600](../Images/computer_vision_mAP_at_50_95.png)
+
+</div>
+</div>
+
+<!--
+Here’s a simple visualization showing how AP changes with IoU thresholds:
+- mAP@50 → the AP when IoU = 0.5 (lenient match).
+- mAP@75 → the AP when IoU = 0.75 (stricter match).
+- mAP@50–95 → the average AP across all thresholds from 0.5 to 0.95 (step 0.05), giving a more balanced view of detection quality across easy and hard cases.
+-->
+
+---
+
+# <br><br>Computer Vision Models
+
+![bg right w:80%](../Images/computer_vision.png)
+
+
+---
 # YOLO: You Only Look Once
 
 - Revolution in Real-time Detection
@@ -91,27 +234,9 @@ h1 {
         - Simple pipeline
 
 ---
-# Image Segmentation Types
-- Three Levels of Granularity
-    1. **Semantic Segmentation**: Pixel-level classification
-    2. **Instance Segmentation**: Differentiates between object instances
-    3. **Panoptic Segmentation**: Combines both approaches
+# Demo - YOLO
+- [Yolo with livestream video](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/ComputerVisionInMotion/yolo_livestream.ipynb)
 
-- Ref
-    - [Semantic vs Instance vs Panoptic](https://pyimagesearch.com/2022/06/29/semantic-vs-instance-vs-panoptic-segmentation/)
-
----
-# U-Net Architecture
-- Specialized for Segmentation
-- **Encoder-Decoder Structure**:
-    - **Encoder**: Feature extraction (contracting path)
-    - **Decoder**: Precise localization (expanding path)
-    - **Skip Connections**: Preserves spatial information
-
-- **Applications**: Medical imaging, satellite imagery, autonomous driving
-
----
-# Hands-on: Real-time Object Detection
 ```python
 from ultralytics import YOLO
 import cv2
@@ -125,129 +250,18 @@ while True:
     ret, frame = cap.read()
     results = model(frame)
     annotated_frame = results[0].plot()
-    cv2.imshow('YOLO Detection', annotated_frame)
-```
----
-# Hands-on: Image Segmentation
-```python
-from ultralytics import YOLO
-
-# Load segmentation model
-model = YOLO('yolo11n-seg.pt')
-
-# Perform segmentation
-results = model('street_scene.jpg')
-results[0].show()  # Display with masks
+    cv2.imshow('YOLO Detection', annotated_frame)                                                 
 ```
 
 ---
-# Performance Comparision
-Task|	Output|	Speed|	Use Cases
-----|---------|------|------------
-Classification|	Single label|	Fastest|	Content filtering, basic recognition
-Object Detection|	Bounding boxes with labels|	Fast|	Surveillance, retail analytics
-Segmentation|	Pixel-level masks|	Slowest|	Medical imaging, autonomous driving
 
----
-# Real World Applications
-<div class="columns">
-<div>
+# <br><br><br>References
 
-- Autonomous Vehicles
-    - Lane detection (segmentation)
-    - Pedestrian and vehicle detection
-    - Traffic sign recognition
-
-- Medical Imaging
-    - Tumor segmentation in MRI/CT scans
-    - Cell counting in microscopy
-    - Organ segmentation for surgery planning
-</div>
-<div>
-
-- Retail & E-commerce
-    - Shelf monitoring and inventory management
-    - Virtual try-on applications
-    - Customer behavior analysis
-
-- Agriculture
-    - Crop health monitoring
-    - Yield prediction through segmentation
-    - Pest detection
-</div>
-</div>
-
-
-
-
-
----
-# Technical Considerations
-- Challenges in Real-time Applications
-    - Computational Constraints: Balancing accuracy vs. speed
-    - Lighting Variations: Robustness to different conditions
-    - Scale Variations: Detecting objects at multiple distances
-    - Occlusion Handling: Partial object visibility
-
----
-# Model Selection Guide
-- When to Use Which Approach?
-    - YOLO: Real-time applications, multiple object detection
-    - U-Net: Precision tasks, medical imaging, detailed segmentation
-    - Mask R-CNN: Instance segmentation with high accuracy
-    - Detectron2: Research applications, customizable pipelines
-
----
-# Ethical Considerations
-- Important Discussion Points
-    - Privacy: Surveillance and facial recognition
-    - Bias: Training data representation
-    - Safety: Autonomous systems responsibility
-    - Transparency: Explainable AI decisions
-
----
-# Getting Started Resources
-- Recommended Tools & Libraries
-    - Ultralytics YOLO: Easy-to-use object detection
-    - Detectron2: Facebook's segmentation platform
-    - OpenCV: Computer vision operations
-    - Roboflow: Dataset management and augmentation
----
-
-# Next Steps
-- Experiment with different model sizes (nano, small, medium, large)
-- Try custom training on specific datasets
-- Explore model optimization for deployment
-
----
-# References
-<style class=scoped>
-    table {
-        font-size: 0.5em;
-    }
-</style>
-
-|Technology/Concept|	Resource Type & Link|	Key Details / Purpose
-|------------------|---------------------|--------------------------
-|YOLO (All Versions)|	[A Comprehensive Review of YOLO...](https://arxiv.org/html/2304.00501v6/)	|Covers evolution from YOLOv1 to YOLOv8 and YOLO-NAS; includes metrics, architecture changes, and diverse applications.
-|U-Net| [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)	|Introduces the classic encoder-decoder architecture with skip connections for precise image segmentation.
-|Mask R-CNN| [Mask R-CNN](https://arxiv.org/abs/1703.06870)	|Extends Faster R-CNN by adding a parallel branch for predicting high-quality segmentation masks for each object instance.
+![bg right w:80%](../Images/computer_vision.png)
 
 
 ---
 # References
-<style class=scoped>
-    table {
-        font-size: 0.5em;
-    }
-</style>
-
-|Technology/Concept|	Resource Type & Link|	Key Details / Purpose
-|------------------|---------------------|--------------------------
-|Detectron2| [Official Documentation: Detectron2 Docs](https://detectron2.readthedocs.io/)	|Meta AI's framework for object detection and segmentation, built on PyTorch. Source for models and training code.
-|OpenCV| [Main Documentation: OpenCV Docs](https://docs.opencv.org/4.x/index.html)|	The fundamental library for computer vision tasks, essential for image/video I/O, preprocessing, and GUI operations.
-|  | [Python Tutorials: OpenCV-Python Tutorials](https://docs.opencv.org/4.x/d6/d00/tutorial_py_root.html)|	Practical guides for using OpenCV with Python, ideal for hands-on components and getting started.
-|Roboflow| [Platform & Learning: Roboflow Docs](https://docs.roboflow.com/)|	End-to-end platform for building computer vision projects (managing datasets, training, and deployment).
-| | [Learning Resources: Roboflow Learn](https://roboflow.com/learn)|	Educational guides and tutorials covering computer vision fundamentals and project workflows.
-|COCO Dataset| Evaluation Metrics|	A common benchmark dataset. Its evaluation metric, Average Precision (AP), is standard for object detection models.
-
+- [Semantic vs Instance vs Panoptic Segmentation](https://pyimagesearch.com/2022/06/29/semantic-vs-instance-vs-panoptic-segmentation/)
+- [A Comprehensive Review of YOLO...](https://arxiv.org/html/2304.00501v6/)
+- [OpenCV Docs](https://docs.opencv.org/4.x/index.html)
