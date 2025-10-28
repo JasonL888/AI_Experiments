@@ -113,17 +113,17 @@ style: |
 
 ---
 
-# Hands-On Part 1: Classic Q-Learning
+# Hands-On Prt 1: Classic Q-Learning
 - **Environment**: `FrozenLake-v1` from Gymnasium
     - **Goal**: Navigate a frozen lake to reach the goal.
     - **State**: Your position on the grid.
     - **Actions**: Move Up, Down, Left, Right.
     - **Reward**: `+1` for reaching the goal, `0` otherwise.
-- We will:
+- Overview:
     - Set up the Q-table (states x actions).
     - Implement the Q-learning update rule.
     - Watch our agent evolve from a random walker to a proficient lake-crosser!
-- [Hands-On Part 1: Classic Q-Learning - Python notebook](./hands_on_part_1_classic_q-learning.ipynb)
+- [Hands-On Part 1: Classic Q-Learning - Python notebook](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/ReinforcementLearning/hands_on_part_1_classic_q-learning.ipynb)
 
 ---
 # Hands-On Part 2: Modern Deep RL
@@ -133,11 +133,11 @@ style: |
     - **State**: Cart position, velocity, pole angle, pole angular velocity.
     - **Actions**: Push cart left or right.
     - **Reward**: `+1` for every timestep the pole remains upright.
-- We will:
+- Overview:
     - Use a neural network to approximate the Q-function (a DQN).
     - Focus on the **training loop**: `agent.learn(total_timesteps=10_000)`
     - Visualize the training progress and the final performance.
-- [ Hands-On Part2: Modern Deep RL - Python notebook](./hands_on_part_2_modern_deep_RL.ipynb)
+- [ Hands-On Part2: Modern Deep RL - Python notebook](https://githubtocolab.com/JasonL888/AI_Experiments/blob/main/ReinforcementLearning/hands_on_part_2_modern_deep_RL.ipynb)
 
 ---
 # Heart of RL: Reward Function
