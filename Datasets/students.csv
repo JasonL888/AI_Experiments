@@ -1,0 +1,16 @@
+name,department,gpa,salary,grade
+Alice Chen,Engineering,3.8,95000,A
+Bob Martinez,Marketing,3.1,68000,B
+Charlie Osei,Sales,2.9,,C
+Diana Kowalski,Engineering,3.6,89000,A
+Ethan Brooks,Data Science,3.9,102000,A
+Fatima Rahman,Marketing,,71000,B
+Grace Lin,Sales,2.7,58000,C
+Hassan Ali,Engineering,3.4,84000,B
+Isabella Rossi,Data Science,3.7,97000,A
+Jamal Carter,Marketing,3.0,65000,B
+Kenji Sato,Sales,2.5,,D
+Laura Schmidt,Engineering,3.9,99000,A
+Mateo Silva,Data Science,3.3,88000,B
+Nadia Petrova,Marketing,2.8,62000,C
+Omar Farouk,Sales,3.2,72000,B
